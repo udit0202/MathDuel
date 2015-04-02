@@ -1,0 +1,210 @@
+<merge>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainScreenLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/gameOverString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:rotation="270"
+            android:text="Game Over"
+            android:textSize="30dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/countDownTimerPlayer1"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/screenCenter"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:background="#000000"
+            android:gravity="center"
+            android:textColor="#ffff871e"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/countDownTimerPlayer2"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/screenCenter"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="3dp"
+            android:background="#000000"
+            android:gravity="center"
+            android:rotation="180"
+            android:textColor="#ffff871e"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/playerTwoScore"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/screenCenter"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp"
+            android:background="#000000"
+            android:gravity="center"
+            android:rotation="90"
+            android:text="0"
+            android:textColor="#fff1f6ff"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/playerOneScore"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/screenCenter"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:background="#000000"
+            android:gravity="center"
+            android:rotation="90"
+            android:text="0"
+            android:textColor="#fff1f6ff"
+            android:textSize="20dp" />
+
+        <studio.idle.mathduel.common.VerticalTextView
+            android:id="@+id/player_one_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/playerOneScore"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Player 1"
+            android:textAllCaps="true" />
+
+        <studio.idle.mathduel.common.VerticalTextView
+            android:id="@+id/player_two_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/playerTwoScore"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:text="Player 2"
+            android:textAllCaps="true" />
+
+        <ImageView
+            android:id="@+id/player_two_goal_highlight"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:alpha="0"
+            android:background="#ffb84c4d" />
+
+        <ImageView
+            android:id="@+id/player_one_goal_highlight"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:alpha="0"
+            android:background="#ffb84c4d"
+            android:rotation="180" />
+
+        <ImageView
+            android:id="@+id/football"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/football" />
+
+        <TextView
+            android:id="@+id/screenCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <Button
+            android:id="@+id/questionViewPlayerOne"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/screenCenter"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp" />
+
+        <Button
+            android:id="@+id/optionOnePlayer1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/questionViewPlayerOne"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="35dp"
+            android:layout_toLeftOf="@+id/optionTwoPlayer1"
+            android:onClick="playerOneAnswerSubmitted" />
+
+        <Button
+            android:id="@+id/optionTwoPlayer1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/questionViewPlayerOne"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:onClick="playerOneAnswerSubmitted" />
+
+        <Button
+            android:id="@+id/optionThreePlayer1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/questionViewPlayerOne"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="35dp"
+            android:layout_toRightOf="@+id/optionTwoPlayer1"
+            android:onClick="playerOneAnswerSubmitted" />
+
+        <Button
+            android:id="@+id/questionViewPlayerTwo"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/screenCenter"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:rotation="180" />
+
+        <Button
+            android:id="@+id/optionOnePlayer2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/questionViewPlayerTwo"
+            android:layout_marginBottom="35dp"
+            android:layout_marginRight="50dp"
+            android:layout_toLeftOf="@+id/optionTwoPlayer2"
+            android:onClick="playerTwoAnswerSubmitted"
+            android:rotation="180" />
+
+        <Button
+            android:id="@+id/optionTwoPlayer2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/questionViewPlayerTwo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:onClick="playerTwoAnswerSubmitted"
+            android:rotation="180" />
+
+        <Button
+            android:id="@+id/optionThreePlayer2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/questionViewPlayerTwo"
+            android:layout_marginBottom="35dp"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/optionTwoPlayer2"
+            android:onClick="playerTwoAnswerSubmitted"
+            android:rotation="180" />
+
+    </RelativeLayout>
+</merge>

@@ -1,49 +1,49 @@
 <merge>
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/selectLevelLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/level_view"
+        android:background="@drawable/select_level_layout"
         android:visibility="gone">
 
         <EditText
-            android:id="@+id/playerOne"
+            android:id="@+id/playerOneNameInput"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:capitalize="characters"
             android:gravity="center"
             android:hint="Player 1 Name"
             android:maxLength="10" />
 
         <EditText
-            android:id="@+id/playerTwo"
+            android:id="@+id/playerTwoNameInput"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:layout_below="@+id/playerOne"
+            android:layout_below="@+id/playerOneNameInput"
             android:layout_centerHorizontal="true"
+            android:capitalize="characters"
             android:gravity="center"
             android:hint="Player 2 Name"
-            android:inputType="textPersonName"
             android:maxLength="10" />
 
         <TextView
-            android:id="@+id/levelHeading"
+            android:id="@+id/selectLevelHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/playerTwoNameInput"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/playerTwo"
             android:layout_marginTop="10dp"
             android:text="Select Level"
-            android:textSize="25dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="25dp" />
 
         <RadioGroup
-            android:id="@+id/radioGroupLevel"
+            android:id="@+id/selectLevelRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/levelHeading"
+            android:layout_below="@id/selectLevelHeading"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
@@ -52,7 +52,7 @@
                 android:id="@+id/easyRadioButton"
                 android:layout_width="220dp"
                 android:layout_height="50dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="Easy" />
@@ -62,7 +62,7 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="Medium" />
@@ -72,17 +72,17 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="Difficult" />
         </RadioGroup>
 
         <TextView
-            android:id="@+id/selectTimeView"
+            android:id="@+id/selectGameDurationView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radioGroupLevel"
+            android:layout_below="@+id/selectLevelRadioGroup"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Select Game Duration"
@@ -90,10 +90,10 @@
             android:textSize="20dp" />
 
         <RadioGroup
-            android:id="@+id/radioGroupDuration"
+            android:id="@+id/gameDurationRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/selectTimeView"
+            android:layout_below="@id/selectGameDurationView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
@@ -102,7 +102,7 @@
                 android:id="@+id/oneMinuteButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="1 M" />
@@ -112,7 +112,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="3 M" />
@@ -122,7 +122,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="5M" />
@@ -132,18 +132,17 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/level_button"
+                android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:text="10M" />
         </RadioGroup>
 
-
         <Button
             android:id="@+id/startButton"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/radioGroupDuration"
+            android:layout_below="@+id/gameDurationRadioGroup"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:onClick="startGameActivity"

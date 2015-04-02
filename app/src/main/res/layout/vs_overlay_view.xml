@@ -1,0 +1,40 @@
+<merge>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/vsOverlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/field_overlay">
+
+        <TextView
+            android:id="@+id/centreVsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Vs"
+            android:textColor="#ffa9a9a7"
+            android:textSize="35dp" />
+
+        <TextView
+            android:id="@+id/playerOneNameVsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/centreVsView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:rotation="180"
+            android:textColor="#ffa9a9a7"
+            android:textSize="35dp" />
+
+        <TextView
+            android:id="@+id/playerTwoNameVsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/centreVsView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:textColor="#ffa9a9a7"
+            android:textSize="35dp" />
+
+    </RelativeLayout>
+</merge>
