@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
@@ -41,7 +42,7 @@ public class GameActivity extends Activity {
 
     int gameLevel = 1, gameDuration = 180000, tickTime = 1000, timeLeft = gameDuration; //setting default values
     int answer, playerOneScore = 0, playerTwoScore = 0;
-    boolean lock, gameOver, isSoundOn, startingAnimationOn, countDownStarted, backLayoutVisible, countDownCouldNotBegin;
+    boolean lock, gameOver, isSoundOn, startingAnimationOn, countDownStarted, backLayoutVisible, countDownCouldNotBegin, manuallyPaused;
     String playerOneName, playerTwoName;
     Random rand;
 
@@ -137,27 +138,38 @@ public class GameActivity extends Activity {
     @Override
     protected void onPause() {
         Log.i("Checking", "game onPause()");
-        super.onPause();
+        if (startingAnimationOn) {
+            Log.i("Checking", "animation paused");
+            alphaAnimationFadeIn.pause();
+            alphaAnimationFadeOut.pause();
+        }
+
         if (timer != null) {
             timer.cancel(); // Stop the timer, will be started
         }
         if (mState == CommonConstants.MusicPlayerState.Playing) {
-            Log.i("Checking", "game onPause()");
             mp.pause();
             mState = CommonConstants.MusicPlayerState.Paused;
         }
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-        if (mState == CommonConstants.MusicPlayerState.Paused) {
+        if (mState == CommonConstants.MusicPlayerState.Paused && !manuallyPaused) {
             mp.start();
             mState = CommonConstants.MusicPlayerState.Playing;
         }
-        if (timeLeft > 0 && timeLeft < gameDuration) {
+        if (timeLeft > 0 && timeLeft < gameDuration && !manuallyPaused) {
+            Log.i("Time left", timeLeft + "");
             startCountdown(timeLeft, tickTime);
         }
+        if (startingAnimationOn && alphaAnimationFadeIn.isPaused() && !manuallyPaused) {
+            Log.i("Checking", "starting Animation resumed");
+            alphaAnimationFadeIn.resume();
+            alphaAnimationFadeOut.resume();
+        }
+        super.onResume();
     }
 
     @Override
@@ -183,6 +195,7 @@ public class GameActivity extends Activity {
         alphaAnimationFadeIn.setFillAfter(true);
         mainGameView.setAnimation(alphaAnimationFadeOut);
         vsOverlayView.setAnimation(alphaAnimationFadeIn);
+        vsOverlayView.setClickable(true);
 
         alphaAnimationFadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -192,6 +205,7 @@ public class GameActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                Log.i("Checking", "Animation Ended");
                 playWhistleSound();
                 startingAnimationOn = false;
             }
@@ -218,6 +232,8 @@ public class GameActivity extends Activity {
                 if (!gameOver && !backLayoutVisible) { // Handling the scenario in which user pressed back button while start whistle
                     startCountdown(gameDuration, tickTime);
                     setFormula();
+                    vsOverlayView.setClickable(false);
+                    mainGameView.setClickable(true);
                 } else {
                     //Countdown stopped because of stopped button
                     countDownCouldNotBegin = true;
@@ -279,6 +295,7 @@ public class GameActivity extends Activity {
             public void onFinish() {
                 playerOneTimer.setText("00:00");
                 playerTwoTimer.setText("00:00");
+                timeLeft = 0;
                 gameOver();
             }
         }.start();
@@ -350,6 +367,7 @@ public class GameActivity extends Activity {
         Log.i("Checking", "onBackPressed()");
         if (!gameOver) {
             backLayoutVisible = true;
+            manuallyPaused = true;
             if (startingAnimationOn) {
                 alphaAnimationFadeIn.pause();
                 alphaAnimationFadeOut.pause();
@@ -478,7 +496,7 @@ public class GameActivity extends Activity {
         display.getSize(size);
         final int height = size.y;
         final int width = size.x;
-        final int yMovement = (goalSide == CommonConstants.GoalSide.PlayerTwoSide ? (height / 2 * -1) : height / 2);
+        final int yMovement = (goalSide == CommonConstants.GoalSide.PlayerTwoSide ? ((height / 2 - 50) * -1) : (height / 2) - 50);
         int xMovement = rand.nextInt(width / 10) - (width / 20);
 
         ObjectAnimator yAnimation = ObjectAnimator.ofFloat(footballView, "y", footballView.getY(), footballView.getY() + yMovement);
@@ -526,7 +544,7 @@ public class GameActivity extends Activity {
         ObjectAnimator yReverseAnimation = ObjectAnimator.ofFloat(footballView, "y", footballView.getY(), footballView.getY() - movement);
         yReverseAnimation.setDuration(1);
         yReverseAnimation.start();
-        yReverseAnimation.setStartDelay(1400); //1.4 seconds
+        yReverseAnimation.setStartDelay(1200); //1.2seconds
         yReverseAnimation.addListener(new Animator.AnimatorListener() {
 
             @Override
@@ -536,24 +554,12 @@ public class GameActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (!gameOver) {
-                    new Thread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }*/
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setFormula();
-                                }
-                            });
+                            setFormula();
                         }
-                    }).start();
-
+                    });
                 }
             }
 
@@ -598,6 +604,7 @@ public class GameActivity extends Activity {
     }
 
     public void continuePressed(View view) {
+        manuallyPaused = false;
         if (startingAnimationOn) {
             alphaAnimationFadeIn.resume();
             alphaAnimationFadeOut.resume();
@@ -615,6 +622,8 @@ public class GameActivity extends Activity {
             Log.i("Checking", "countDownCouldNotBegin");
             startCountdown(timeLeft, tickTime);
             countDownCouldNotBegin = false;
+            vsOverlayView.setClickable(false);
+            mainGameView.setClickable(true);
             setFormula();
         }
         backButtonPressedLayout = (RelativeLayout) findViewById(R.id.backPressedLayout);

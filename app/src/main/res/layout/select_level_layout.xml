@@ -115,7 +115,7 @@
                 android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
-                android:text="3 M" />
+                android:text="2 M" />
 
             <RadioButton
                 android:id="@+id/fiveMinuteButton"
@@ -125,7 +125,7 @@
                 android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
-                android:text="5M" />
+                android:text="3 M" />
 
             <RadioButton
                 android:id="@+id/tenMinuteButton"
@@ -135,7 +135,7 @@
                 android:background="@drawable/select_level_button"
                 android:button="@android:color/transparent"
                 android:gravity="center"
-                android:text="10M" />
+                android:text="5 M" />
         </RadioGroup>
 
         <Button

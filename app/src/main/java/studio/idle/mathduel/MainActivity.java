@@ -20,9 +20,9 @@ import studio.idle.mathduel.common.PreferenceKeys;
 
 public class MainActivity extends Activity implements RadioGroup.OnCheckedChangeListener{
 
-    private boolean isSoundOn, selectLevelViewVisible;
+    private boolean isSoundOn, selectLevelViewVisible, selectLevelViewShouldRemainVisible = true;
     private int gameLevel = 0; // default Easy
-    private int gameDuration = 180000; //default 3 minutes
+    private int gameDuration = 120000; //default 2 minutes
     private RelativeLayout selectLevelLayout, mainScreenLayout;
     private RadioGroup selectLevelRadioGroup, gameDurationRadioGroup;
     private SharedPreferences settings;
@@ -85,6 +85,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     public void onResume() {
         Log.i("Checking", "onResume");
         super.onResume();
+        if (selectLevelViewVisible && !selectLevelViewShouldRemainVisible) {
+            selectLevelLayout.setVisibility(View.GONE);
+            mainScreenLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -97,11 +101,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         mainScreenLayout.setVisibility(View.GONE);
         selectLevelLayout.setVisibility(View.VISIBLE);
         selectLevelLayout.setClickable(true);
+        selectLevelViewVisible = true;
+        selectLevelViewShouldRemainVisible = true;
         //Alpha Animation
         ObjectAnimator anim = ObjectAnimator.ofFloat(selectLevelLayout, "alpha", 0f, 1f);
         anim.setDuration(1000);
         anim.start();
-        selectLevelViewVisible = true;
     }
 
     @Override
@@ -113,10 +118,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     @Override
     protected void onStop() {
         Log.i("Checking", "MainActivity onStop()");
-        // Temporarily Putting it here
-        mainScreenLayout.setVisibility(View.VISIBLE);
-        selectLevelLayout.setVisibility(View.GONE);
-        selectLevelViewVisible = false;
         super.onStop();
     }
 
@@ -147,6 +148,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         intent.putExtra(CommonConstants.PLAYER_TWO_NAME, playerTwoEditText.getText().toString());
         intent.putExtra(CommonConstants.GAME_DURATION, gameDuration);
         intent.putExtra(CommonConstants.IS_SOUND_ON, isSoundOn);
+        selectLevelViewShouldRemainVisible = false;
         //start Game Activity
         startActivity(intent);
     }
@@ -167,13 +169,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 gameDuration = 6000; // 1 Minute
                 break;
             case R.id.threeMinuteButton:
-                gameDuration = 180000; // 3 Minutes
+                gameDuration = 120000; // 2 Minutes
                 break;
             case R.id.fiveMinuteButton:
-                gameDuration = 300000; // 5 Minutes
+                gameDuration = 180000; // 3 Minutes
                 break;
             case R.id.tenMinuteButton:
-                gameDuration = 600000; // 10 Minutes
+                gameDuration = 300000; // 5 Minutes
         }
     }
 
